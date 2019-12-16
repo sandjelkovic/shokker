@@ -1,0 +1,48 @@
+version: "3.5"
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: shokkerZookeper
+    ports:
+      - "2181:2181"
+    networks:
+      - shokkerKafkaNetwork
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: shokkerKafkaNode
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_PORT: 9092
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://localhost:9092"
+      KAFKA_LISTENERS: "PLAINTEXT://:9092"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    ports:
+      - 9092:9092
+    networks:
+      - shokkerKafkaNetwork
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  cassandra-node-1:
+    image: cassandra
+    container_name: shokkerCassandraNode1
+    ports:
+    - 7000:7000
+    - 9042:9042
+    environment:
+      CASSANDRA_CLUSTER_NAME: "shokkerCluster"
+    volumes:
+      - "./cassandra-init.sh:/cassandra-init.sh"
+      - "./.testdata/cassandra:/var/lib/cassandra"
+    command: "sh /cassandra-init.sh"
+    networks:
+      - shokkerCassandraNetwork
+
+networks:
+  shokkerKafkaNetwork:
+  shokkerCassandraNetwork:

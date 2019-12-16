@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: tweet-mapper
+  cloud:
+    stream:
+      function.definition: printer;tweetToPost
+      bindings:
+        tweetToPost-in-0:
+          destination: rawTweets
+          group: tweetToPostConverter
+        tweetToPost-out-0:
+          destination: posts
+#          todo Key Extractor!
+          partitioned: true
+          partitionCount: 12
+          partition-key-expression: headers['partitionKey']

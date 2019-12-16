@@ -1,0 +1,19 @@
+persister:
+  kafka:
+    client:
+      bootstrapServers: "localhost:9092"
+      clientId: "postPersister"
+      groupId: "cassandraPersister"
+      commitBatchSize: 5
+      offsetReset: EARLIEST
+      topic: "posts"
+logging:
+  level:
+    com.sandjelkovic.shokker.post.persister.PostPersister: DEBUG
+spring:
+  data:
+    cassandra:
+      keyspace-name: shokkerSpace
+      schema-action: create_if_not_exists
+
+

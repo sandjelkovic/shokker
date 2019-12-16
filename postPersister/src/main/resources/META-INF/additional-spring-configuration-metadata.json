@@ -1,0 +1,28 @@
+{
+  "properties": [
+    {
+      "name": "persister.kafka.client.bootstrapServers",
+      "type": "java.lang.String",
+      "description": "Description for persister.kafka.client.bootstrapServers."
+    },
+    {
+      "name": "persister.kafka.client.clientId",
+      "type": "java.lang.String",
+      "description": "Description for persister.kafka.client.clientId."
+    },
+    {
+      "name": "persister.kafka.client.groupId",
+      "type": "java.lang.String",
+      "description": "Description for persister.kafka.client.groupId."
+    },
+    {
+      "name": "persister.kafka.client.commitBatchSize",
+      "type": "java.lang.String",
+      "description": "Description for persister.kafka.client.commitBatchSize."
+    },
+    {
+      "name": "persister.kafka.client.offsetReset",
+      "type": "java.lang.String",
+      "description": "Description for persister.kafka.client.offsetReset."
+    }
+  ] }
