@@ -12,7 +12,7 @@ fun main(args: Array<String>) {
         twitterConsumer.sequence()
             .onEach { logger.debug("Before Kafka publish") }
             .map(sink::publish)
-            .forEach { logger.debug("Published a tweet to Kafka") }
+            .forEach { _ -> logger.debug("Published a tweet to Kafka") }
     }
 
     logger.info("Shutting down")

@@ -2,7 +2,6 @@ package com.sandjelkovic.shokker.twitter.producer
 
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerConfig
-import org.apache.kafka.common.serialization.LongSerializer
 import org.apache.kafka.common.serialization.StringSerializer
 import java.util.*
 
@@ -14,7 +13,7 @@ object KafkaConfiguration {
     const val SERVERS = "localhost:9092" // TODO extract to configuration
     const val TOPIC = "rawTweets" // TODO extract to configuration
 
-    fun createKafkaProducer(): KafkaProducer<Long, String> = KafkaProducer(producerProperties())
+    fun createKafkaProducer(): KafkaProducer<String, String> = KafkaProducer(producerProperties())
 
     private fun producerProperties(): Properties {
         val properties = Properties()
@@ -22,8 +21,11 @@ object KafkaConfiguration {
         properties[ProducerConfig.ACKS_CONFIG] = "1"
         properties[ProducerConfig.LINGER_MS_CONFIG] = 500
         properties[ProducerConfig.RETRIES_CONFIG] = 0
-        properties[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] = LongSerializer::class.java.name
+        properties[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java.name
         properties[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java.name
+        properties[ProducerConfig.RETRIES_CONFIG]= 3
+        properties[ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG] = 15_000
+        properties[ProducerConfig.RETRY_BACKOFF_MS_CONFIG] = 1_000
         return properties
     }
 }
