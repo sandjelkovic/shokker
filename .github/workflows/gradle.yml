@@ -14,3 +14,4 @@ jobs:
       with:
         java-version: 11
     - name: Shokker all modules build
+      run: ./gradlew build
