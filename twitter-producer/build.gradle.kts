@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    id("com.google.cloud.tools.jib")
 }
 
 dependencies {
@@ -11,4 +12,14 @@ dependencies {
     implementation("org.slf4j:slf4j-log4j12:1.7.30")
     implementation("org.slf4j:slf4j-api:1.7.30")
     implementation("io.github.microutils:kotlin-logging:1.7.7")
+}
+
+jib {
+    to {
+        image = "sandjelkovic/shokker/${project.name}"
+    }
+    container {
+        mainClass = "com.sandjelkovic.shokker.twitter.producer.MainKt"
+        creationTime = "USE_CURRENT_TIMESTAMP"
+    }
 }

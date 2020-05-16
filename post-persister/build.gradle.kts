@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm")
     kotlin("kapt")
     kotlin("plugin.spring")
+    id("com.google.cloud.tools.jib")
 }
 
 extra["springCloudVersion"] = "Hoxton.SR4"
@@ -43,4 +44,14 @@ dependencyManagement {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+jib {
+    to {
+        image = "sandjelkovic/shokker/${project.name}"
+    }
+    container {
+        mainClass = "com.sandjelkovic.shokker.post.persister.PostPersisterApplicationKt"
+        creationTime = "USE_CURRENT_TIMESTAMP"
+    }
 }

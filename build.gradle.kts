@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.9.RELEASE" apply false
     kotlin("jvm") version "1.3.71"
     kotlin("plugin.spring") version "1.3.71" apply false
+    id("com.google.cloud.tools.jib") version "2.2.0" apply false
 }
 
 version = "0.0.1-SNAPSHOT"

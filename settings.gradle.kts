@@ -1,4 +1,4 @@
 rootProject.name = "shokker"
-include("twitterProducer")
-include("tweetMapper")
-include("postPersister")
+include("twitter-producer")
+include("tweet-mapper")
+include("post-persister")
