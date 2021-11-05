@@ -22,7 +22,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
     ports:
-      - 9092:9092
+      - "9092:9092"
     networks:
       - shokkerKafkaNetwork
     volumes:
@@ -32,8 +32,8 @@ services:
     image: cassandra
     container_name: shokkerCassandraNode1
     ports:
-    - 7000:7000
-    - 9042:9042
+    - "7000:7000"
+    - "9042:9042"
     environment:
       CASSANDRA_CLUSTER_NAME: "shokkerCluster"
     volumes:
