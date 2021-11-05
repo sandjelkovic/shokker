@@ -16,8 +16,7 @@ class PostPersister(
         private val kafkaClientProperties: KafkaClientProperties,
         private val gson: Gson,
         private val postRepository: PostRepository,
-        private val cassandraScheduler: Scheduler,
-        private val numberOfCassandraRetries: Long
+        private val cassandraScheduler: Scheduler
 ) {
     private val logger = KotlinLogging.logger {}
     private val topic: String = kafkaClientProperties.topic
@@ -34,8 +33,9 @@ class PostPersister(
 
     private fun saveToCassandra(flux: Flux<Post>): Flux<Post> = flux.publishOn(cassandraScheduler)
         .map(this::enhanceWithId)
-        .flatMap(this::saveOne) // TODO check if saveAll can be used
-        .retry(numberOfCassandraRetries)
+        .map(this::saveOne) // TODO check if saveAll can be used
+        .retry()
+        .flatMap { it }
 
     private fun saveOne(post: Post): Mono<Post> = postRepository.save(post)
         .doOnNext { logger.debug { "Saved $it" } }

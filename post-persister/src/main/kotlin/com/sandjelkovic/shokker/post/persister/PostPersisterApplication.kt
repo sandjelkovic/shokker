@@ -17,7 +17,7 @@ import reactor.core.scheduler.Schedulers
 class PostPersisterApplication {
     @Bean
     fun postPersister(kafkaClientProperties: KafkaClientProperties, postRepository: PostRepository, reactiveCassandraTemplate: ReactiveCassandraTemplate) =
-        PostPersister(kafkaClientProperties, Gson(), postRepository, Schedulers.newBoundedElastic(50, Schedulers.DEFAULT_BOUNDED_ELASTIC_QUEUESIZE, "CassandraScheduler"), 15L)
+        PostPersister(kafkaClientProperties, Gson(), postRepository, Schedulers.newBoundedElastic(50, Schedulers.DEFAULT_BOUNDED_ELASTIC_QUEUESIZE, "CassandraScheduler"))
 
     @Bean
     fun runner(postPersister: PostPersister) = StreamRunner {
